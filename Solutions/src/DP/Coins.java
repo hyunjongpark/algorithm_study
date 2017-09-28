@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+
 /*
  *
  * https://algospot.com/judge/problem/read/COINS
@@ -24,17 +25,12 @@ import java.util.StringTokenizer;
 4
  */
 public class Coins {
-	static int PRICE;
-	static int PRICE_COUNT;
-
+	static boolean debug = true;
+	static int price;
 	static int priceStep;
 	static long[][] DBT;
-
 	static int[] hasPrice;
-
 	static ArrayList<Integer> stepPrice;
-
-	static ArrayList<Integer> mergeCount;
 
 	public static void main(String[] args) throws IOException {
 		System.setIn(new FileInputStream("coins"));
@@ -44,23 +40,24 @@ public class Coins {
 		int T = Integer.parseInt(br.readLine());
 		for (int i = 0; i < T; i++) {
 			st = new StringTokenizer(br.readLine());
-			PRICE = Integer.parseInt(st.nextToken());
-			PRICE_COUNT = Integer.parseInt(st.nextToken());
-			hasPrice = new int[PRICE_COUNT];
+			price = Integer.parseInt(st.nextToken());
+			int count = Integer.parseInt(st.nextToken());
+			hasPrice = new int[count];
 			st = new StringTokenizer(br.readLine());
-			for (int j = 0; j < PRICE_COUNT; j++) {
+			for (int j = 0; j < count; j++) {
 				hasPrice[j] = Integer.parseInt(st.nextToken());
 			}
-			priceStep = PRICE / 1;
+			priceStep = price / 1;
 			stepPrice = new ArrayList<Integer>();
 			DBT = new long[priceStep][hasPrice.length];
 
-			mergeCount = new ArrayList<Integer>();
 			for (int j = 0; j < priceStep; j++) {
 				stepPrice.add((j + 1));
 			}
 			updateTable();
-			 printTable();
+			if (debug) {
+				printTable();
+			}
 
 			long result = 0;
 			for (int j = 0; j < hasPrice.length; j++) {
