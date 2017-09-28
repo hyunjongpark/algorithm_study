@@ -1,0 +1,15 @@
+package DP;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class WineTasting {
+	public void Main(String[] args) throws NumberFormatException, IOException{
+		System.setIn(new FileInputStream("winetasting"));
+		InputStreamReader isr = new InputStreamReader(System.in);
+		
+		
+	}
+
+}

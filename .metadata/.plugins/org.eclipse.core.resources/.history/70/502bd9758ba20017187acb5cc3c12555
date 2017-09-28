@@ -1,0 +1,53 @@
+package DP;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class WineTasting {
+	static int T;
+	static int[][] dpt;
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		System.setIn(new FileInputStream("winetasting"));
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		StringTokenizer token;
+
+		T = Integer.parseInt(br.readLine());
+		dpt = new int[T][6];
+
+		for (int i = 0; i < T; i++) {
+			int v = Integer.parseInt(br.readLine());
+			updateTable(v, i);
+		}
+		printTable();
+
+	}
+
+	public static void updateTable(int v, int row) {
+		if (row == 0 ){
+			for (int i = 0; i < 6; i++) {
+				switch (i){
+				case 0:
+					dpt[row][i] = 0;
+					break;
+				}
+			}
+			
+		}
+
+	}
+
+	public static void printTable() {
+		for (int i = 0; i < T; i++) {
+			for (int j = 0; j < 6; j++) {
+				System.out.print(dpt[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}
+
+}

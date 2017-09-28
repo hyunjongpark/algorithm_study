@@ -1,0 +1,45 @@
+package DP;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Coins {
+	static int PRICE;
+	static int PRICE_COUNT;
+	static int[] arr;
+	static int[][] DBT;
+	
+	public static void main(String[] args) throws IOException{
+		System.setIn(new FileInputStream("coins"));
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		StringTokenizer st;
+		int T = Integer.parseInt(br.readLine());
+		for (int i = 0 ; i < T ; i++){
+			st = new StringTokenizer(br.readLine());
+			PRICE = Integer.parseInt(st.nextToken());
+			PRICE_COUNT = Integer.parseInt(st.nextToken());
+			arr = new int[PRICE_COUNT];
+			DBT = new int[PRICE_COUNT][4];
+			st = new StringTokenizer(br.readLine());
+			for (int j = 0 ; j < PRICE_COUNT ; j++){
+				arr[j] = Integer.parseInt(st.nextToken());
+			}
+			printTable();
+		}
+	}
+	
+	static void printTable(){
+		int a = PRICE / 1;
+		for(int i = 0 ; i < PRICE ; i++){
+			for(int j = 0 ; j < 4 ; j++){
+				System.out.print(DBT[i][j]);
+			}
+			System.out.println();
+		}
+	}
+
+}

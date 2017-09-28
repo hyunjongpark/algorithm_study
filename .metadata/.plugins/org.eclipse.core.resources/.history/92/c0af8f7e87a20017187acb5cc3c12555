@@ -1,0 +1,10 @@
+package DP;
+
+import java.io.IOException;
+
+public class WineTasting {
+	public void Main(String[] args) throws NumberFormatException, IOException{
+		
+	}
+
+}

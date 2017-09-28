@@ -1,0 +1,65 @@
+package DP;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Coins {
+	static int PRICE;
+	static int PRICE_COUNT;
+	static int[] arr;
+
+	static int priceStep;
+	static int[][] DBT;
+
+//	static int[] hasPrice = new int[] { 1, 2, 3, 4 };
+
+	public static void main(String[] args) throws IOException {
+		System.setIn(new FileInputStream("coins"));
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		StringTokenizer st;
+		int T = Integer.parseInt(br.readLine());
+		for (int i = 0; i < T; i++) {
+			st = new StringTokenizer(br.readLine());
+			PRICE = Integer.parseInt(st.nextToken());
+			PRICE_COUNT = Integer.parseInt(st.nextToken());
+			arr = new int[PRICE_COUNT +1];
+			st = new StringTokenizer(br.readLine());
+			for (int j = 1; j <= PRICE_COUNT; j++) {
+				arr[j] = Integer.parseInt(st.nextToken());
+			}
+			priceStep = PRICE / arr[0];
+			DBT = new int[priceStep+1][arr.length];
+			updateTable();
+			printTable();
+		}
+	}
+
+	static void updateTable() {
+		for (int i = 1; i <= priceStep; i++) {
+			for (int j = 0; j < arr.length; j++) {
+				int currentPrice = i * arr[0];
+				if (currentPrice >= arr[j]){
+					
+					DBT[i][j] = 1;
+				}
+				
+				
+				
+			}
+		}
+	}
+
+	static void printTable() {
+		for (int i = 1; i <= priceStep; i++) {
+			for (int j = 0; j < arr.length; j++) {
+				System.out.print(arr[i] + " " + DBT[i][j] + "  ");
+			}
+			System.out.println();
+		}
+	}
+
+}

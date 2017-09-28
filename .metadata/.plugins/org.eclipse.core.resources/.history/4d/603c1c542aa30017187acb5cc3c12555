@@ -1,0 +1,14 @@
+package DP;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class Coins {
+	
+	public static void main(int[] args) throws IOException{
+		System.setIn(new FileInputStream("coins"));
+		
+		
+	}
+
+}

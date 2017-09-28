@@ -1,0 +1,12 @@
+package DP;
+
+import java.io.IOException;
+
+public class Coins {
+	
+	public static void main(int[] args) throws IOException{
+		System.setIn("");
+		
+	}
+
+}

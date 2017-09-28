@@ -1,0 +1,96 @@
+package DP;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class Coins {
+	static int PRICE;
+	static int PRICE_COUNT;
+
+	static int priceStep;
+	static long[][] DBT;
+
+	static int[] hasPrice;
+
+	static ArrayList<Integer> stepPrice;
+
+	static ArrayList<Integer> mergeCount;
+
+	public static void main(String[] args) throws IOException {
+		System.setIn(new FileInputStream("coins"));
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		StringTokenizer st;
+		int T = Integer.parseInt(br.readLine());
+		for (int i = 0; i < T; i++) {
+			st = new StringTokenizer(br.readLine());
+			PRICE = Integer.parseInt(st.nextToken());
+			PRICE_COUNT = Integer.parseInt(st.nextToken());
+			hasPrice = new int[PRICE_COUNT];
+			st = new StringTokenizer(br.readLine());
+			for (int j = 0; j < PRICE_COUNT; j++) {
+				hasPrice[j] = Integer.parseInt(st.nextToken());
+			}
+			priceStep = PRICE / 1;
+			stepPrice = new ArrayList<Integer>();
+			DBT = new long[priceStep][hasPrice.length];
+
+			mergeCount = new ArrayList<Integer>();
+			for (int j = 0; j < priceStep; j++) {
+				stepPrice.add((j + 1));
+			}
+			updateTable();
+			// printTable();
+
+			long result = 0;
+			for (int j = 0; j < hasPrice.length; j++) {
+				result += DBT[priceStep - 1][j];
+			}
+
+			System.out.println(result % 1000000007);
+			// System.out.println(testFullSearch(PRICE, new
+			// ArrayList<Integer>(), 0));
+		}
+	}
+
+	static void updateTable() {
+		for (int i = 0; i < priceStep; i++) {
+			int rowPrice = (i + 1);
+			for (int j = 0; j < hasPrice.length; j++) {
+				if (rowPrice < hasPrice[j]) {
+					break;
+				}
+				if (rowPrice == hasPrice[j]) {
+					DBT[i][j] = 1;
+				} else {
+					int prePriceIndex = stepPrice.indexOf(rowPrice - hasPrice[j]);
+					DBT[i][j] = DBT[prePriceIndex][j];
+					for (int t = j - 1; t >= 0; t--) {
+						DBT[i][j] += DBT[prePriceIndex][t];
+					}
+				}
+			}
+		}
+	}
+
+	static void printTable() {
+		System.out.print("	");
+		for (int j = 0; j < hasPrice.length; j++) {
+			System.out.print(hasPrice[j] + "	");
+		}
+		System.out.println();
+		for (int i = 0; i < priceStep; i++) {
+			stepPrice.add((i + 1));
+			System.out.print(stepPrice.get(i) + "	");
+			for (int j = 0; j < hasPrice.length; j++) {
+				System.out.print(DBT[i][j] + "	");
+			}
+			System.out.println();
+		}
+	}
+
+}
