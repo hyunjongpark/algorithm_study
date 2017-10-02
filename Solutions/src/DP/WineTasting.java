@@ -12,6 +12,7 @@ public class WineTasting {
 	static int T;
 	static int[][] dpt;
 	static int[] arr;
+	static int reault;
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		System.setIn(new FileInputStream("winetasting"));
@@ -21,6 +22,7 @@ public class WineTasting {
 		T = Integer.parseInt(br.readLine());
 		dpt = new int[T][6];
 		arr = new int[T];
+		reault = 0;
 
 		for (int i = 0; i < T; i++) {
 			int v = Integer.parseInt(br.readLine());
@@ -35,11 +37,11 @@ public class WineTasting {
 		}
 		// printTable();
 
-		int maxValue = 0;
-		for (int i = 0; i < 6; i++) {
-			maxValue = Math.max(maxValue, dpt[T - 1][i]);
-		}
-		System.out.println(maxValue);
+//		int maxValue = 0;
+//		for (int i = 0; i < 6; i++) {
+//			maxValue = Math.max(maxValue, dpt[T - 1][i]);
+//		}
+		System.out.println(reault);
 
 	}
 
@@ -73,6 +75,9 @@ public class WineTasting {
 				dpt[row][i] = getMaxValue(new int[] { 1, 3, 5 }, row) + arr[row - 2] + arr[row - 1];
 				break;
 			}
+			}
+			if (reault < dpt[row][i]){
+				reault = dpt[row][i];
 			}
 		}
 	}

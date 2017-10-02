@@ -25,12 +25,13 @@ import java.util.StringTokenizer;
 4
  */
 public class Coins {
-	static boolean debug = true;
+	static boolean debug = false;
 	static int price;
 	static int priceStep;
 	static long[][] DBT;
 	static int[] hasPrice;
 	static ArrayList<Integer> stepPrice;
+	static long result;
 
 	public static void main(String[] args) throws IOException {
 		System.setIn(new FileInputStream("coins"));
@@ -43,6 +44,7 @@ public class Coins {
 			price = Integer.parseInt(st.nextToken());
 			int count = Integer.parseInt(st.nextToken());
 			hasPrice = new int[count];
+			result = 0;
 			st = new StringTokenizer(br.readLine());
 			for (int j = 0; j < count; j++) {
 				hasPrice[j] = Integer.parseInt(st.nextToken());
@@ -59,10 +61,10 @@ public class Coins {
 				printTable();
 			}
 
-			long result = 0;
-			for (int j = 0; j < hasPrice.length; j++) {
-				result += DBT[priceStep - 1][j];
-			}
+//			long result = 0;
+//			for (int j = 0; j < hasPrice.length; j++) {
+//				result += DBT[priceStep - 1][j];
+//			}
 
 			System.out.println(result % 1000000007);
 		}
@@ -83,6 +85,9 @@ public class Coins {
 					for (int t = j - 1; t >= 0; t--) {
 						DBT[i][j] += DBT[prePriceIndex][t];
 					}
+				}
+				if (result < DBT[i][j]){
+					result = DBT[i][j];
 				}
 			}
 		}

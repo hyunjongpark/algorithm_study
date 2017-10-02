@@ -1,4 +1,7 @@
 package DP;
+/*
+ * https://www.acmicpc.net/problem/10835
+ */
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -15,6 +18,8 @@ public class CardGame {
 	static int[] right;
 
 	static int[][] dpt;
+
+	static int maxValue;
 
 	static public class LR {
 		int l;
@@ -36,6 +41,7 @@ public class CardGame {
 		left = new int[depth];
 		right = new int[depth];
 		dpt = new int[depth + 1][depth + 1];
+		maxValue = 0;
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		for (int i = 0; i < depth; i++) {
@@ -46,17 +52,11 @@ public class CardGame {
 			right[i] = Integer.parseInt(st.nextToken());
 		}
 
-		// LinkedList<LR> queue = new LinkedList<LR>();
 		Queue<LR> queue = new LinkedList<>();
-		queue.offer(new LR(1, 1));
-		dpt[1][1] = 0;
-		queue.offer(new LR(1, 0));
-		dpt[1][0] = 0;
-		queue.offer(new LR(0, 1));
-		dpt[0][1] = 2;
+		queue.offer(new LR(0, 0));
 		updateTable(queue);
 
-		System.out.print(dpt[depth - 1][depth]);
+		System.out.print(maxValue);
 	}
 
 	public static void updateTable(Queue<LR> queue) {
@@ -75,10 +75,10 @@ public class CardGame {
 				if (!isContain(queue, addlr)) {
 					queue.offer(addlr);
 				}
-			}
-			if (leftIndex + 1 < depth && rightIndex + 1 < depth && dpt[leftIndex + 1][rightIndex + 1] < v) {
-				dpt[leftIndex + 1][rightIndex + 1] = v;
-				printDBTable(queue);
+				if (dpt[leftIndex + 1][rightIndex + 1] < v) {
+					dpt[leftIndex + 1][rightIndex + 1] = v;
+					printDBTable(queue);
+				}
 			}
 
 			// case1 L
@@ -87,25 +87,26 @@ public class CardGame {
 				if (!isContain(queue, addlr)) {
 					queue.offer(addlr);
 				}
-			}
-			if (leftIndex + 1 < depth && rightIndex < depth && dpt[leftIndex + 1][rightIndex] < v) {
-				dpt[leftIndex + 1][rightIndex] = v;
-				printDBTable(queue);
+
+				if (dpt[leftIndex + 1][rightIndex] < v) {
+					dpt[leftIndex + 1][rightIndex] = v;
+					printDBTable(queue);
+				}
 			}
 
 			// case1 R
-			if (leftIndex < depth && rightIndex + 1 < depth) {
+			if (leftIndex < depth && rightIndex < depth) {
 				LR addlr = new LR(leftIndex, rightIndex + 1);
 				if (!isContain(queue, addlr)) {
 					queue.offer(addlr);
 				}
-			}
 
-			if (leftIndex < depth && rightIndex < depth) {
 				if (left[leftIndex] > right[rightIndex] && dpt[leftIndex][rightIndex + 1] < v + right[rightIndex]) {
 					dpt[leftIndex][rightIndex + 1] = v + right[rightIndex];
-				} else {
-					dpt[leftIndex][rightIndex + 1] = v;
+				}
+				
+				if (maxValue < dpt[leftIndex][rightIndex + 1]) {
+					maxValue = dpt[leftIndex][rightIndex + 1];
 				}
 				printDBTable(queue);
 			}
@@ -133,8 +134,8 @@ public class CardGame {
 		}
 		System.out.println();
 
-		for (int i = 0; i <= depth; i++) {
-			for (int j = 0; j <= depth; j++) {
+		for (int i = 0; i < depth; i++) {
+			for (int j = 1; j <= depth; j++) {
 				System.out.print(dpt[i][j] + "	");
 			}
 			System.out.println();
