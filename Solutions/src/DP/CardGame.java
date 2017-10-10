@@ -1,142 +1,113 @@
 package DP;
 /*
  * https://www.acmicpc.net/problem/10835
+ * 
+	2	4	1	
+3	0	2	-1	-1	
+2	0	2	2	3	
+5	0	2	6	7	
+
+7
  */
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class CardGame {
-	static boolean debug = true;
-	static int depth = 0;
-	static int[] left;
-	static int[] right;
 
-	static int[][] dpt;
-
-	static int maxValue;
-
-	static public class LR {
-		int l;
-		int r;
-
-		LR(int a, int b) {
-			l = a;
-			r = b;
-		}
-
-	}
+	static boolean debug = false;
+	static int cardCount;
+	static int[] L;
+	static int[] R;
+	static int[][] LR;
+	static int result;
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		System.setIn(new FileInputStream("cardgame"));
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
-		depth = Integer.parseInt(br.readLine());
 
-		left = new int[depth];
-		right = new int[depth];
-		dpt = new int[depth + 1][depth + 1];
-		maxValue = 0;
+		cardCount = Integer.parseInt(br.readLine());
+		L = new int[cardCount + 1];
+		R = new int[cardCount + 1];
+		LR = new int[cardCount + 1][cardCount + 1];
+		result = 0;
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < depth; i++) {
-			left[i] = Integer.parseInt(st.nextToken());
+		for (int i = 0; i < cardCount; i++) {
+			L[i] = Integer.parseInt(st.nextToken());
+			Arrays.fill(LR[i], -1);
 		}
 		st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < depth; i++) {
-			right[i] = Integer.parseInt(st.nextToken());
+		for (int i = 0; i < cardCount; i++) {
+			R[i] = Integer.parseInt(st.nextToken());
 		}
+		LR[0][0] = 0;
+		updateTable();
 
-		Queue<LR> queue = new LinkedList<>();
-		queue.offer(new LR(0, 0));
-		updateTable(queue);
-
-		System.out.print(maxValue);
-	}
-
-	public static void updateTable(Queue<LR> queue) {
-
-		while (!queue.isEmpty()) {
-			LR lr = queue.poll();
-
-			int leftIndex = lr.l;
-			int rightIndex = lr.r;
-
-			int v = dpt[leftIndex][rightIndex];
-
-			// case1 LR
-			if (leftIndex + 1 < depth && rightIndex + 1 < depth) {
-				LR addlr = new LR(leftIndex + 1, rightIndex + 1);
-				if (!isContain(queue, addlr)) {
-					queue.offer(addlr);
-				}
-				if (dpt[leftIndex + 1][rightIndex + 1] < v) {
-					dpt[leftIndex + 1][rightIndex + 1] = v;
-					printDBTable(queue);
-				}
-			}
-
-			// case1 L
-			if (leftIndex + 1 < depth && rightIndex < depth) {
-				LR addlr = new LR(leftIndex + 1, rightIndex);
-				if (!isContain(queue, addlr)) {
-					queue.offer(addlr);
-				}
-
-				if (dpt[leftIndex + 1][rightIndex] < v) {
-					dpt[leftIndex + 1][rightIndex] = v;
-					printDBTable(queue);
-				}
-			}
-
-			// case1 R
-			if (leftIndex < depth && rightIndex < depth) {
-				LR addlr = new LR(leftIndex, rightIndex + 1);
-				if (!isContain(queue, addlr)) {
-					queue.offer(addlr);
-				}
-
-				if (left[leftIndex] > right[rightIndex] && dpt[leftIndex][rightIndex + 1] < v + right[rightIndex]) {
-					dpt[leftIndex][rightIndex + 1] = v + right[rightIndex];
-				}
-				
-				if (maxValue < dpt[leftIndex][rightIndex + 1]) {
-					maxValue = dpt[leftIndex][rightIndex + 1];
-				}
-				printDBTable(queue);
-			}
-
-			printDBTable(queue);
-		}
+		System.out.println(result);
 
 	}
 
-	public static boolean isContain(Queue<LR> queue, LR lr) {
-		for (LR anObject : queue) {
-			if (anObject.l == lr.l && anObject.r == lr.r) {
-				return true;
+	public static void updateTable() {
+		for (int i = 0; i <= cardCount; i++) {
+			for (int j = 0; j <= cardCount; j++) {
+				if (LR[i][j] == -1) {
+					break;
+				}
+
+				// case L
+				if (i != cardCount && LR[i + 1][j] < LR[i][j]) {
+					LR[i + 1][j] = LR[i][j];
+					if (result < LR[i][j]) {
+						result = LR[i][j];
+					}
+				}
+
+				// case LR
+				if (i != cardCount && j != cardCount && LR[i + 1][j + 1] < LR[i][j]) {
+					LR[i + 1][j + 1] = LR[i][j];
+					if (result < LR[i][j]) {
+						result = LR[i][j];
+					}
+				}
+
+				// case R
+				if (j != cardCount && L[i] > R[j]) {
+					if (LR[i][j + 1] < LR[i][j] + R[j]) {
+						LR[i][j + 1] = LR[i][j] + R[j];
+						if (result < LR[i][j]) {
+							result = LR[i][j];
+						}
+					}
+				}
+				printTable();
 			}
 		}
-		return false;
 	}
 
-	public static void printDBTable(Queue<LR> queue) {
+	public static void printTable() {
 		if (!debug) {
 			return;
 		}
-		for (LR anObject : queue) {
-			System.out.print(anObject.l + ":" + anObject.r + ", ");
+		System.out.print("	");
+		for (int i = 0; i < cardCount; i++) {
+			System.out.print(R[i] + "	");
 		}
 		System.out.println();
 
-		for (int i = 0; i < depth; i++) {
-			for (int j = 1; j <= depth; j++) {
-				System.out.print(dpt[i][j] + "	");
+		for (int i = 0; i < cardCount; i++) {
+			for (int j = 0; j <= cardCount; j++) {
+				if (j == 0 && i != cardCount) {
+					System.out.print(L[i] + "	");
+				} else if (j == 0 && i == cardCount) {
+					System.out.print("	");
+				}
+				System.out.print(LR[i][j] + "	");
 			}
 			System.out.println();
 		}
