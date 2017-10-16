@@ -61,10 +61,10 @@ public class Coins {
 				printTable();
 			}
 
-//			long result = 0;
-//			for (int j = 0; j < hasPrice.length; j++) {
-//				result += DBT[priceStep - 1][j];
-//			}
+			long result = 0;
+			for (int j = 0; j < hasPrice.length; j++) {
+				result += DBT[priceStep - 1][j];
+			}
 
 			System.out.println(result % 1000000007);
 		}

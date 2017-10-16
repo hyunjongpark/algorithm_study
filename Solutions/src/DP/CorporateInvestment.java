@@ -12,11 +12,11 @@ ARRS
 0	0	0	0	0	
 0	5	6	7	10	
 0	1	5	9	15	
-BPT
+DP table
 0	0	0	0	0	
 0	5	6	7	10	
 0	5	6	10	15	
-PATH
+PATH table
 0	0	0	0	0	
 0	1	2	3	4	
 0	0	0	2	4	
@@ -94,7 +94,7 @@ public class CorporateInvestment {
 		if (!debug) {
 			return;
 		}
-		System.out.println("ARRS");
+		System.out.println("input");
 		for (int i = 0; i <= company; i++) {
 			for (int j = 0; j <= money; j++) {
 				System.out.print(arrs[i][j] + "	");
@@ -102,7 +102,7 @@ public class CorporateInvestment {
 			System.out.println();
 		}
 
-		System.out.println("BPT");
+		System.out.println("DP table");
 		for (int i = 0; i <= company; i++) {
 			for (int j = 0; j <= money; j++) {
 				System.out.print(dp[i][j] + "	");
@@ -110,7 +110,7 @@ public class CorporateInvestment {
 			System.out.println();
 		}
 
-		System.out.println("PATH");
+		System.out.println("PATH table");
 		for (int i = 0; i <= company; i++) {
 			for (int j = 0; j <= money; j++) {
 				System.out.print(path[i][j] + "	");

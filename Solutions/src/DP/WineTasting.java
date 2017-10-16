@@ -1,5 +1,13 @@
 /*
  * https://www.acmicpc.net/problem/2156
+
+ 	6	0	6	0	6	0	
+	10	6	16	0	10	6	
+	13	10	23	6	19	16	
+	15	19	28	16	25	23	
+	24	25	33	23	31	28	
+	24	31	32	28	29	33	
+33
  */
 package DP;
 
@@ -9,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class WineTasting {
+	static boolean debug = true;
 	static int T;
 	static int[][] dpt;
 	static int[] arr;
@@ -32,15 +41,10 @@ public class WineTasting {
 			} else {
 				updateTable(v, i);
 			}
-			// printTable();
-			// System.out.println();
+			printTable();
 		}
-		// printTable();
+		printTable();
 
-//		int maxValue = 0;
-//		for (int i = 0; i < 6; i++) {
-//			maxValue = Math.max(maxValue, dpt[T - 1][i]);
-//		}
 		System.out.println(reault);
 
 	}
@@ -76,7 +80,7 @@ public class WineTasting {
 				break;
 			}
 			}
-			if (reault < dpt[row][i]){
+			if (reault < dpt[row][i]) {
 				reault = dpt[row][i];
 			}
 		}
@@ -174,12 +178,16 @@ public class WineTasting {
 	}
 
 	public static void printTable() {
+		if (!debug){
+			return;
+		}
 		for (int i = 0; i < T; i++) {
 			for (int j = 0; j < 6; j++) {
 				System.out.print(dpt[i][j] + "	");
 			}
 			System.out.println();
 		}
+		System.out.println();
 	}
 
 	public static int getMaxValue(int[] index, int row) {

@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class CardGame {
+public class CardGameByQueue {
 	static boolean debug = true;
 	static int depth = 0;
 	static int[] left;
