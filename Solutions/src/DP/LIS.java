@@ -1,6 +1,6 @@
 package DP;
 /*
- * https://www.acmicpc.net/problem/1965
+ * https://www.acmicpc.net/problem/12015
  */
 
 import java.io.BufferedReader;
@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class InsertBox {
+public class LIS {
 	static int T;
 	static long[] arr;
 

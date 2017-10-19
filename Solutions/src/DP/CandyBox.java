@@ -1,4 +1,4 @@
-package segments;
+package DP;
 /*
  * https://www.acmicpc.net/problem/2243
  */

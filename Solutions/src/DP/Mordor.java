@@ -1,4 +1,4 @@
-package segments;
+package DP;
 /*
  * https://algospot.com/judge/problem/read/MORDOR
  */
