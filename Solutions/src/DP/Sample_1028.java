@@ -63,6 +63,7 @@ public class Sample_1028 {
 				nodes.get(e).list.add(nodes.get(s));
 			}
 			Collections.sort(nodes);
+			int pathCount = 0;
 			for (int j = 1; j < nodes.size(); j++) {
 				Node node = nodes.get(j);
 				for (int t = 0; t < node.list.size(); t++) {
@@ -71,10 +72,6 @@ public class Sample_1028 {
 						node.count += (subNode.count + 1);
 					}
 				}
-			}
-			int pathCount = 0;
-			for (int j = 1; j < nodes.size(); j++) {
-				Node node = nodes.get(j);
 				pathCount += node.count;
 			}
 			System.out.println(pathCount % 1000000007);
