@@ -7,7 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Segments_1572 {
+public class CenterValue {
 	static int N = 0;
 	static int K = 0;
 	static int arr[];

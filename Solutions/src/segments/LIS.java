@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 
-public class Segments_11053 {
+public class LIS {
 	static int N;
 	static int arr[];
 	static int sort[];

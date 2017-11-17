@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 
-public class Segments_10999 {
+public class RangeSum2 {
 	static int N, M, K;
 	static long arr[];
 	static long lazy[];

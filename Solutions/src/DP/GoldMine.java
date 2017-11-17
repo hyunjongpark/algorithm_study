@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 public class GoldMine {
 	static int N;
 
-	static int[][] arrs;
+	static int[][] arr;
 	static int[][] sameXYCount;
 	static int[] countY;
 
@@ -73,7 +73,7 @@ public class GoldMine {
 		nodesX = new ArrayList<NodeX>();
 		nodesY = new ArrayList<NodeY>();
 
-		arrs = new int[3000][3000];
+		arr = new int[3000][3000];
 		sameXYCount = new int[3000][3000];
 		countY = new int[3000];
 		StringTokenizer st;
@@ -85,7 +85,7 @@ public class GoldMine {
 			nodesX.add(new NodeX(x, y, v));
 			nodesY.add(new NodeY(x, y, v));
 
-			arrs[x][y] = v;
+			arr[x][y] = v;
 
 			countY[y] = countY[y] + 1;
 		}

@@ -7,7 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Segments_2042 {
+public class RangeSum {
 	static int N, M, K;
 	static int arr[];
 	static long tree[];

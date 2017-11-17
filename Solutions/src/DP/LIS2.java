@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class LIS {
+public class LIS2 {
 	static int T;
 	static long[] arr;
 
