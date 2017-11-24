@@ -1,4 +1,4 @@
-package DP;
+package segments;
 /*
  * LIS
  * https://www.acmicpc.net/problem/11568

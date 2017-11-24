@@ -1,4 +1,7 @@
 package segments;
+/*
+ * https://www.acmicpc.net/problem/2042
+ */
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

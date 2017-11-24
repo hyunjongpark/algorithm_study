@@ -1,80 +1,74 @@
 package segments;
 /*
- * https://www.acmicpc.net/problem/1
+ * https://www.acmicpc.net/problem/9426
  */
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class CenterValue {
-	static int N = 0;
-	static int K = 0;
-	static int arr[];
-	static long tree[];
 
-	public static void main(String[] args) throws FileNotFoundException {
-		System.setIn(new FileInputStream("1572"));
-		Scanner sc = new Scanner(System.in);
-		N = sc.nextInt();
-		K = sc.nextInt();
-		int size = (int) Math.pow(2, height() + 1);
-		tree = new long[size];
-		arr = new int[N];
+	static int N;
+
+	static int[] TREE;
+	static int SIZE;
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		System.setIn(new FileInputStream("centervalue"));
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(st.nextToken());
+
+		int height = (int) Math.ceil(Math.log(12) / Math.log(2));
+		int size = (int) Math.pow(2, height + 1);
+
+		SIZE = 12 * 4 + 1;
+		TREE = new int[SIZE+1];
+		int check = Integer.parseInt(st.nextToken());
+
+		int min = 0;
+		int max = 0;
 		for (int i = 0; i < N; i++) {
-			arr[i] = sc.nextInt();
+			int v = Integer.parseInt(br.readLine());
+			
+			
+			set(1, 0, size, v);
+			System.out.println(TREE[1]);
+			remove(1, 0, size, v);
+			System.out.println(TREE[1]);
 		}
-		init(1, 0, N - 1);
-		
 	}
 
-	public static long init(int node, int start, int end) {
-		if (start == end) {
-			tree[node] = arr[start];
-			 System.out.println("node: " + node + " start: " + start + " end: " + end + " tree[node]: " + tree[node]);
-			return arr[start];
-		}
-
-		tree[node] = init(node * 2, start, (start + end) / 2) + init(node * 2 + 1, (start + end) / 2 + 1, end);
-		 System.out.println("node: " + node + " start: " + start + " end: " + end + " tree[node]: " + tree[node]);
-		return tree[node];
-	}
-
-	public static void update(int node, int start, int end, int index, int diff) {
+	static void set(int node, int start, int end, int index) {
 		if (index < start || end < index) {
 			return;
 		}
-		tree[node] = tree[node] + diff;
-		// System.out.println("node: " + node + " start: " + start + " end: " +
-		// end + " index: " + index+ " tree[node]: " + tree[node]);
 		if (start == end) {
+			TREE[node] += 1;
 			return;
 		}
-		update(node * 2, start, (start + end) / 2, index, diff);
-		update(node * 2 + 1, (start + end) / 2 + 1, end, index, diff);
+		int mid = (start + end) / 2;
+		set(node * 2, start, mid, index);
+		set(node * 2 + 1, mid + 1, end, index);
+		TREE[node] = TREE[node * 2] + TREE[node * 2 + 1];
+	}
+	
+	static void remove(int node, int start, int end, int index) {
+		if (index < start || end < index) {
+			return;
+		}
+		if (start == end) {
+			TREE[node] -= 1;
+			return;
+		}
+		int mid = (start + end) / 2;
+		remove(node * 2, start, mid, index);
+		remove(node * 2 + 1, mid + 1, end, index);
+		TREE[node] = TREE[node * 2] + TREE[node * 2 + 1];
 	}
 
-	public static long sum(int node, int start, int end, int left, int right) {
-		if (end < left || right < start) {
-			return 0;
-		}
-		if (left <= start && end <= right) {
-			// System.out.println(" node: " + node + " start: " + start + " end:
-			// " + end + " tree[node]: " + tree[node]);
-			return tree[node];
-		}
-		return sum(node * 2, start, (start + end) / 2, left, right)
-				+ sum(node * 2 + 1, (start + end) / 2 + 1, end, left, right);
-	}
-
-	private static int height() {
-		int i = 1;
-		while (true) {
-			if (Math.pow(2, i) > N) {
-				break;
-			}
-			i++;
-		}
-		return i;
-	}
 }
