@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class GreedyPanda {
-	static boolean debug = false;
+	static boolean debug = true;
 	static int N;
 	static int[][] map;
 	static int[][] dpt;

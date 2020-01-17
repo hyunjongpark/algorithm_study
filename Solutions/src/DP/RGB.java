@@ -16,7 +16,7 @@ import java.util.StringTokenizer;
 
 public class RGB {
 
-	static boolean debug = false;
+	static boolean debug = true;
 	static int n;
 	static int[][] dpt;
 	static int[][] arrs;
